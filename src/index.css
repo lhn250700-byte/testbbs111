@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+ul,
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+a.active {
+  border: 1px solid #000;
+  background: #ccc;
+  font-weight: bold;
+}
