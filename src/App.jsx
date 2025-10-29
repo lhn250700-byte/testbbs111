@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import supabase from './utils/supabase';
 import { BrowserRouter, Link, NavLink, Route, Routes } from 'react-router-dom';
 import HomeComp from './pages/home/HomeComp';
 
@@ -19,7 +18,7 @@ const App = () => {
         <ul className="d-flex gap-3 align-items-center">
           <li>
             <NavLink to="/" className="nav-link p-2">
-              HOME1
+              HOME
             </NavLink>
           </li>
           <li>
