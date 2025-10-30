@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import supabase from '../../utils/supabase';
+import dayjs from 'dayjs';
 
 const ViewComp = () => {
   const { id } = useParams();
@@ -13,6 +14,11 @@ const ViewComp = () => {
       console.error(error);
     }
   };
+
+  const clickHandler = async () => {
+    await supabase.from('posts').delete().eq('user_id', id);
+  };
+
   useEffect(() => {
     fetch();
   }, []);
@@ -20,14 +26,22 @@ const ViewComp = () => {
   return (
     <div className="border my-3 p-4 rounded">
       <h3 className="mb-3">{posts.title}</h3>
-      <div className="d-flex justify-content-between mb-5">
+      <div className="d-flex justify-content-between mb-5" style={{ borderBottom: '1px solid #ccc' }}>
         <em>{posts.name}</em>
-        <p style={{ color: 'grey' }}>{posts.created}</p>
+        <p style={{ color: 'grey' }}>{dayjs(posts.created).format('YY.MM.DD')}</p>
       </div>
-      <p className="mb-3">{posts.content}</p>
-      <div className="d-flex justify-content-end">
+      <p className="mb-3" style={{ minHeight: '300px' }}>
+        {posts.content}
+      </p>
+      <div className="d-flex justify-content-end gap-2">
         <Link to="/board/list" className="btn btn-primary">
           목록
+        </Link>
+        <Link to="/board/modi" className="btn btn-primary">
+          수정
+        </Link>
+        <Link to="/board/list" className="btn btn-danger" onClick={clickHandler}>
+          삭제
         </Link>
       </div>
     </div>

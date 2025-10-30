@@ -38,6 +38,11 @@ const App = () => {
         <Route path="/about/*" element={<AboutComp />} />
         <Route path="/board/*" element={<BoardComp />} />
       </Routes>
+      <div className="container bg-info p-3 " style={{ height: '100px' }}>
+        [footer] Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae fuga aspernatur sapiente quis ipsam
+        earum, deleniti porro, cum consectetur blanditiis maiores eum? Laudantium sint at assumenda iste blanditiis
+        provident quia.
+      </div>
     </BrowserRouter>
   );
 };
