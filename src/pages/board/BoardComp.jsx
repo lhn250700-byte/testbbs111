@@ -62,10 +62,10 @@ const BoardComp = () => {
       </div>
       <Routes>
         <Route index element={<ListComp posts={posts} />} />
-        <Route path="list" element={<ListComp posts={posts} />} />
-        <Route path="write" element={<WriteComp />} />
-        <Route path="view/:id" element={<ViewComp />} />
-        <Route path="modify/:id" element={<ModifyComp />} />
+        <Route path="/list" element={<ListComp posts={posts} />} />
+        <Route path="/write" element={<WriteComp />} />
+        <Route path="/view/:id" element={<ViewComp />} />
+        <Route path="/modify/:id" element={<ModifyComp />} />
       </Routes>
     </div>
   );

@@ -9,7 +9,7 @@ const ModifyComp = () => {
   const eventHandler = (e) => {
     const { value, name } = e.target;
 
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const fetch1 = async () => {
