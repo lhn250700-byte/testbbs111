@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import supabase from '../../utils/supabase';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-const ModifyComp = () => {
+const ModifyComp = ({ refresh }) => {
   const { id } = useParams();
   const nav = useNavigate();
   const [formData, setFormData] = useState({ title: '', content: '', name: '' });
@@ -16,29 +16,29 @@ const ModifyComp = () => {
     try {
       const { data, error } = await supabase.from('posts').select('*').eq('id', Number(id)).single();
       setFormData({ ...data });
-    } catch (error) {
-      console.error('error!', error);
-    }
+
+      if (error) console.error('error!', error);
+    } catch (err) {}
   };
 
   const fetch = async () => {
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('posts')
         .update({ title: formData.title, content: formData.content, name: formData.name })
-        .eq('id', id)
-        .select();
-      data;
-    } catch (error) {
-      console.log('error', error);
-    }
+        .eq('id', id);
+      if (error) console.error('error!', error);
+      else {
+        nav('/board/list');
+        refresh();
+      }
+    } catch (err) {}
   };
 
   const submitHandler = (e) => {
     if (formData.name.trim() && formData.title.trim() && formData.content.trim()) {
       fetch();
       e.preventDefault();
-      nav('/board/list');
     } else if (!formData.name.trim()) {
       alert('작성자명을 입력하세요');
       e.preventDefault();
@@ -84,11 +84,14 @@ const ModifyComp = () => {
             className="form-control"
             placeholder="내용을 입력하세요."
             onChange={eventHandler}
-            style={{ height: '200px' }}
+            rows="5"
             value={formData.content}
           ></textarea>
         </div>
-        <div className="d-flex justify-content-end">
+        <div className="d-flex justify-content-end gap-2">
+          <Link to={`/board/view/${id}`} className="btn btn-danger">
+            취소
+          </Link>
           <button className="btn btn-primary">수정 완료</button>
         </div>
       </form>

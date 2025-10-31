@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import supabase from '../../utils/supabase';
 
-const WriteComp = () => {
+const WriteComp = ({ refresh }) => {
   const nav = useNavigate();
   const [formData, setFormData] = useState({ title: '', content: '', name: '' });
   const eventHandler = (e) => {
@@ -13,15 +13,16 @@ const WriteComp = () => {
 
   const fetch = async () => {
     try {
-      const { data, error } = await supabase
-        .from('posts')
-        .insert({
-          title: formData.title,
-          name: formData.name,
-          content: formData.content,
-        })
-        .select();
-      console.log(data);
+      const { error } = await supabase.from('posts').insert({
+        title: formData.title,
+        name: formData.name,
+        content: formData.content,
+      });
+      if (error) console.error('error', error);
+      else {
+        nav('/board/list');
+        refresh();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +31,6 @@ const WriteComp = () => {
     if (formData.name.trim() && formData.title.trim() && formData.content.trim()) {
       fetch();
       e.preventDefault();
-      nav('/board/list');
     } else if (!formData.name.trim()) {
       alert('작성자명을 입력하세요');
       e.preventDefault();
@@ -70,14 +70,14 @@ const WriteComp = () => {
             className="form-control"
             placeholder="내용을 입력하세요."
             onChange={eventHandler}
-            style={{ height: '200px' }}
+            rows={5}
           ></textarea>
         </div>
-        <div className="d-flex justify-content-end">
+        <div className="d-flex justify-content-end gap-2">
+          <Link to="/board/list" className="btn btn-danger">
+            취소
+          </Link>
           <button className="btn btn-primary">작성 완료</button>
-          {/* <Link to="/board/list" className="btn btn-primary">
-            작성완료
-          </Link> */}
         </div>
       </form>
     </div>

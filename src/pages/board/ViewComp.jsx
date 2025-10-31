@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import supabase from '../../utils/supabase';
 import dayjs from 'dayjs';
 
-const ViewComp = () => {
+const ViewComp = ({ refresh }) => {
   const { id } = useParams();
   const [posts, setPosts] = useState({ content: '', created: '', name: '', title: '' });
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,9 @@ const ViewComp = () => {
   };
 
   const clickHandler = async () => {
-    await supabase.from('posts').delete().eq('id', id);
+    const { error } = await supabase.from('posts').delete().eq('id', id);
+    if (error) console.error(error);
+    else refresh();
   };
 
   useEffect(() => {

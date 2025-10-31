@@ -16,7 +16,7 @@ const BoardComp = () => {
   const fetch = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.from('posts').select();
+      const { data, error } = await supabase.from('posts').select().order('id', { ascending: false });
       setPosts(data);
     } catch (error) {
       console.error(error);
@@ -68,9 +68,9 @@ const BoardComp = () => {
       <Routes>
         <Route index element={<ListComp posts={posts} />} />
         <Route path="/list" element={<ListComp posts={posts} />} />
-        <Route path="/write" element={<WriteComp />} />
-        <Route path="/view/:id" element={<ViewComp />} />
-        <Route path="/modify/:id" element={<ModifyComp />} />
+        <Route path="/write" element={<WriteComp refresh={fetch} />} />
+        <Route path="/view/:id" element={<ViewComp refresh={fetch} />} />
+        <Route path="/modify/:id" element={<ModifyComp refresh={fetch} />} />
       </Routes>
     </div>
   );
