@@ -8,7 +8,7 @@ const ViewComp = () => {
   const [posts, setPosts] = useState({ content: '', created: '', name: '', title: '' });
   const fetch = async () => {
     try {
-      const { data, error } = await supabase.from('posts').select('*').eq('user_id', Number(id)).single();
+      const { data, error } = await supabase.from('posts').select('*').eq('id', Number(id)).single();
       setPosts({ content: data.content, created: data.created_at.split('T')[0], name: data.name, title: data.title });
     } catch (error) {
       console.error(error);
@@ -16,7 +16,7 @@ const ViewComp = () => {
   };
 
   const clickHandler = async () => {
-    await supabase.from('posts').delete().eq('user_id', id);
+    await supabase.from('posts').delete().eq('id', id);
   };
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const ViewComp = () => {
         <Link to="/board/list" className="btn btn-primary">
           목록
         </Link>
-        <Link to="/board/modi" className="btn btn-primary">
+        <Link to={`/board/modify/${id}`} className="btn btn-primary">
           수정
         </Link>
         <Link to="/board/list" className="btn btn-danger" onClick={clickHandler}>

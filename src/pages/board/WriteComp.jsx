@@ -22,7 +22,6 @@ const WriteComp = () => {
         })
         .select();
       console.log(data);
-      console.log(error);
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +80,6 @@ const WriteComp = () => {
           </Link> */}
         </div>
       </form>
-      {JSON.stringify(formData)}
     </div>
   );
 };

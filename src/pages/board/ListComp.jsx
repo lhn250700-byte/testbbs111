@@ -26,7 +26,7 @@ const ListComp = ({ posts }) => {
                   {posts.length - i}
                 </th>
                 <td>
-                  <Link to={`/board/view/${v.user_id}`}>{v.title}</Link>
+                  <Link to={`/board/view/${v.id}`}>{v.title}</Link>
                 </td>
                 <td>{v.name}</td>
                 <td>{dayjs(v.created_at).format('YY.MM.DD')}</td>
