@@ -6,12 +6,16 @@ import dayjs from 'dayjs';
 const ViewComp = () => {
   const { id } = useParams();
   const [posts, setPosts] = useState({ content: '', created: '', name: '', title: '' });
+  const [loading, setLoading] = useState(true);
   const fetch = async () => {
+    setLoading(true);
     try {
       const { data, error } = await supabase.from('posts').select('*').eq('id', Number(id)).single();
       setPosts({ content: data.content, created: data.created_at.split('T')[0], name: data.name, title: data.title });
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -25,6 +29,11 @@ const ViewComp = () => {
 
   return (
     <div className="border my-3 p-4 rounded">
+      {loading ? (
+        <div className="spinner-border text-primary load" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      ) : null}
       <h3 className="mb-3">{posts.title}</h3>
       <div className="d-flex justify-content-between mb-5" style={{ borderBottom: '1px solid #ccc' }}>
         <em>{posts.name}</em>

@@ -31,6 +31,11 @@ const BoardComp = () => {
 
   return (
     <div className="container">
+      {loading ? (
+        <div className="spinner-border text-primary load" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      ) : null}
       <div style={{ width: '100%', height: '200px' }} className="bg-info rounded mb-3">
         <Swiper
           navigation={true}
@@ -53,7 +58,7 @@ const BoardComp = () => {
         </Swiper>
       </div>
       <div className="d-flex gap-3 justify-content-center">
-        <NavLink to="../board/list" className="nav-link p-2">
+        <NavLink to="../board/list" className="nav-link p-2 list">
           List
         </NavLink>
         <NavLink to="../board/write" className="nav-link p-2">
