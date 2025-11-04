@@ -7,8 +7,10 @@ import ModifyComp from './ModifyComp';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import 'swiper/css/navigation';
+import { usePost } from '../../context/PostContext';
 
 const BoardComp = () => {
+  const { loading } = usePost();
   return (
     <div className="container">
       {loading ? (
