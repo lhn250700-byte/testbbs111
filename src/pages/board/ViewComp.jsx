@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import supabase from '../../utils/supabase';
 import dayjs from 'dayjs';
+import { usePost } from '../../context/PostContext';
 
-const ViewComp = ({ refresh }) => {
+const ViewComp = () => {
+  const { fetch: refresh } = usePost();
   const { id } = useParams();
   const [posts, setPosts] = useState({ content: '', created: '', name: '', title: '' });
   const [loading, setLoading] = useState(true);

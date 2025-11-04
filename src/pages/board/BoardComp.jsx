@@ -7,28 +7,8 @@ import ModifyComp from './ModifyComp';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import 'swiper/css/navigation';
-import supabase from '../../utils/supabase';
 
 const BoardComp = () => {
-  const [loading, setLoading] = useState(true);
-  const [posts, setPosts] = useState([]);
-
-  const fetch = async () => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.from('posts').select().order('id', { ascending: false });
-      setPosts(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetch();
-  }, []);
-
   return (
     <div className="container">
       {loading ? (
@@ -58,7 +38,7 @@ const BoardComp = () => {
         </Swiper>
       </div>
       <div className="d-flex gap-3 justify-content-center">
-        <NavLink to="../board/list" className="nav-link p-2 list">
+        <NavLink to={`../board/list`} className="nav-link p-2 list">
           List
         </NavLink>
         <NavLink to="../board/write" className="nav-link p-2">
@@ -66,11 +46,11 @@ const BoardComp = () => {
         </NavLink>
       </div>
       <Routes>
-        <Route index element={<ListComp posts={posts} />} />
-        <Route path="/list" element={<ListComp posts={posts} />} />
-        <Route path="/write" element={<WriteComp refresh={fetch} />} />
-        <Route path="/view/:id" element={<ViewComp refresh={fetch} />} />
-        <Route path="/modify/:id" element={<ModifyComp refresh={fetch} />} />
+        <Route index element={<ListComp />} />
+        <Route path="/list" element={<ListComp />} />
+        <Route path="/write" element={<WriteComp />} />
+        <Route path="/view/:id" element={<ViewComp />} />
+        <Route path="/modify/:id" element={<ModifyComp />} />
       </Routes>
     </div>
   );

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import supabase from '../../utils/supabase';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { usePost } from '../../context/PostContext';
 
-const ModifyComp = ({ refresh }) => {
+const ModifyComp = () => {
+  const { fetch: refresh } = usePost();
+
   const { id } = useParams();
   const nav = useNavigate();
   const [formData, setFormData] = useState({ title: '', content: '', name: '' });
