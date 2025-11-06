@@ -5,7 +5,6 @@ import { usePost } from '../../context/PostContext';
 
 const ModifyComp = () => {
   const { fetch: refresh } = usePost();
-
   const { id } = useParams();
   const nav = useNavigate();
   const [formData, setFormData] = useState({ title: '', content: '', name: '' });

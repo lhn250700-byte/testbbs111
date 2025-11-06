@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { usePost } from '../../context/PostContext';
 
 const ListComp = () => {
-  const { posts } = usePost();
+  const { posts, loading } = usePost();
   // 페이지네이션 미완
   // const [page, setPage] = useState(1);
   // const listCnt = 10;
@@ -34,6 +34,11 @@ const ListComp = () => {
   };
   return (
     <div>
+      {loading ? (
+        <div className="spinner-border text-primary load" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      ) : null}
       <h3>글 목록</h3>
       <table className="table table-hover border my-3">
         <thead>

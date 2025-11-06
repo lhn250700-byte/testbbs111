@@ -7,54 +7,50 @@ import ModifyComp from './ModifyComp';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import 'swiper/css/navigation';
-import { usePost } from '../../context/PostContext';
+import { PostProvider, usePost } from '../../context/PostContext';
 
 const BoardComp = () => {
-  const { loading } = usePost();
   return (
-    <div className="container">
-      {loading ? (
-        <div className="spinner-border text-primary load" role="status">
-          <span className="visually-hidden">Loading...</span>
+    <PostProvider>
+      <div className="container">
+        <div style={{ width: '100%', height: '200px' }} className="bg-info rounded mb-3">
+          <Swiper
+            navigation={true}
+            loop={true}
+            modules={[Navigation, Autoplay]}
+            autoplay={{
+              delay: 1000,
+              disableOnInteraction: false,
+            }}
+          >
+            <SwiperSlide className="d-flex">Board1</SwiperSlide>
+            <SwiperSlide className="d-flex">Board2</SwiperSlide>
+            <SwiperSlide className="d-flex">Board3</SwiperSlide>
+            <SwiperSlide className="d-flex">Board4</SwiperSlide>
+            <SwiperSlide className="d-flex">Board5</SwiperSlide>
+            <SwiperSlide className="d-flex">Board6</SwiperSlide>
+            <SwiperSlide className="d-flex">Board7</SwiperSlide>
+            <SwiperSlide className="d-flex">Board8</SwiperSlide>
+            <SwiperSlide className="d-flex">Board9</SwiperSlide>
+          </Swiper>
         </div>
-      ) : null}
-      <div style={{ width: '100%', height: '200px' }} className="bg-info rounded mb-3">
-        <Swiper
-          navigation={true}
-          loop={true}
-          modules={[Navigation, Autoplay]}
-          autoplay={{
-            delay: 1000,
-            disableOnInteraction: false,
-          }}
-        >
-          <SwiperSlide className="d-flex">Board1</SwiperSlide>
-          <SwiperSlide className="d-flex">Board2</SwiperSlide>
-          <SwiperSlide className="d-flex">Board3</SwiperSlide>
-          <SwiperSlide className="d-flex">Board4</SwiperSlide>
-          <SwiperSlide className="d-flex">Board5</SwiperSlide>
-          <SwiperSlide className="d-flex">Board6</SwiperSlide>
-          <SwiperSlide className="d-flex">Board7</SwiperSlide>
-          <SwiperSlide className="d-flex">Board8</SwiperSlide>
-          <SwiperSlide className="d-flex">Board9</SwiperSlide>
-        </Swiper>
+        <div className="d-flex gap-3 justify-content-center">
+          <NavLink to={`../board/list`} className="nav-link p-2 list">
+            List
+          </NavLink>
+          <NavLink to="../board/write" className="nav-link p-2">
+            Write
+          </NavLink>
+        </div>
+        <Routes>
+          <Route index element={<ListComp />} />
+          <Route path="/list" element={<ListComp />} />
+          <Route path="/write" element={<WriteComp />} />
+          <Route path="/view/:id" element={<ViewComp />} />
+          <Route path="/modify/:id" element={<ModifyComp />} />
+        </Routes>
       </div>
-      <div className="d-flex gap-3 justify-content-center">
-        <NavLink to={`../board/list`} className="nav-link p-2 list">
-          List
-        </NavLink>
-        <NavLink to="../board/write" className="nav-link p-2">
-          Write
-        </NavLink>
-      </div>
-      <Routes>
-        <Route index element={<ListComp />} />
-        <Route path="/list" element={<ListComp />} />
-        <Route path="/write" element={<WriteComp />} />
-        <Route path="/view/:id" element={<ViewComp />} />
-        <Route path="/modify/:id" element={<ModifyComp />} />
-      </Routes>
-    </div>
+    </PostProvider>
   );
 };
 
